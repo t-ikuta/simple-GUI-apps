@@ -50,9 +50,8 @@ const App = {
   handleShowMore(e) {
     const $button = $(e.target);
     const index = $button.closest('article').index('main article');
-    const originalTexts = this.languages.map(languages => languages.description);
 
-    this.$descriptions.eq(index).text(originalTexts[index]);
+    this.$descriptions.eq(index).text(languages[index].description);
     $button.removeClass('show-more').addClass('show-less');
     $button.text('Show less');
   },
@@ -76,25 +75,6 @@ const App = {
         this.handleShowLess(e);
       }
     });
-    // $('.show-more').on('click', e => {
-    //   const $button = $(e.target);
-    //   const index = $button.closest('article').index('main article');
-    //   const originalTexts = this.languages.map(languages => languages.description);
-
-    //   this.$descriptions.eq(index).text(originalTexts[index]);
-    //   $button.removeClass('show-more').addClass('show-less');
-    //   $button.text('Show less');
-    // });
-
-    // $('.show-less').on('click', e => {
-    //   const $button = $(e.target);
-    //   const $article = $button.closest('article');
-    //   const truncatedText = $button.closest('p').text().slice(0, 120) + ' ...';
-
-    //   $button.closest('p').text(truncatedText);
-    //   $button.removeClass('show-less').addClass('show-more');
-    //   $button.text('Show more');
-    // })
   },
   init() {
     this.renderContent();
