@@ -12,19 +12,34 @@ const App = {
     const top = $('html').scrollTop();
     $('.delete-modal').offset({ top: top + 200 });
   },
+  deleteTodo() {
+    const self = this;
+    $('li').filter(function() {
+      return $(this).attr('data-id') === self.id;
+    }).remove();
+
+    // const lis = Array.prototype.slice.call(document.querySelectorAll('li')).filter(el => {
+    //   return $(el).attr('data-id') === this.id;
+    // })
+    // $(li).remove();
+
+    this.deleteOvelayAndModal();
+  },
   handleTodoDeletion() {
+    $('.overlay, .delete-no').on('click', e => this.deleteOvelayAndModal());
+    $('.delete-yes').on('click', e => this.deleteTodo())
+  },
+  handleTodoModal() {
     $('.delete').on('click', e => {
       e.preventDefault();
+      this.id = $(e.target).parent('li').attr('data-id');
       this.showModal();
+      this.handleTodoDeletion();
     })
   },
-  deleteDialog() {
-    $('.overlay').hide();
-    $('.delete-modal').hide();
-  },
-  handleModalDeletion() {
-    $('.overlay').on('click', e => this.deleteDialog());
-    $('.delete-no').on('click', e => this.deleteDialog());
+  deleteOvelayAndModal() {
+    $('.overlay, .delete-modal').hide();
+    // $('.delete-modal').hide();
   },
   renderTodos() {
     const templateHTML = $('#todos-template').html();
@@ -34,8 +49,9 @@ const App = {
   },
   init() {
     this.renderTodos();
-    this.handleTodoDeletion();
-    this.handleModalDeletion();
+    this.handleTodoModal();
+    this.id = null;
+    // this.handleModalDeletion();
   }
 }
 
