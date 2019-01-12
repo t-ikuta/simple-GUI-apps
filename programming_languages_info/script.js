@@ -31,12 +31,76 @@ const languages = [
   }
 ];
 
-$(() => {
-  // render the content
-  const source = $('#template');
-  const template = Handlebars.compile(source.html());
-  const templateHTML = template({ languages: languages });
-  $('main').append(templateHTML);
+const App = {
+  languages: languages,
+  renderContent() {
+    const source = $('#template');
+    const template = Handlebars.compile(source.html());
+    const templateHTML = template({ languages: languages });
+    $('main').append(templateHTML);
+    this.$descriptions = $('p');
+  },
+  truncate() {
+    this.$descriptions.each(function() {
+      const $description = $(this);
+      const truncatedText = $description.text().slice(0, 120) + ' ...';
+      $description.text(truncatedText);
+    })
+  },
+  handleShowMore(e) {
+    const $button = $(e.target);
+    const index = $button.closest('article').index('main article');
+    const originalTexts = this.languages.map(languages => languages.description);
 
-  
-})
+    this.$descriptions.eq(index).text(originalTexts[index]);
+    $button.removeClass('show-more').addClass('show-less');
+    $button.text('Show less');
+  },
+  handleShowLess(e) {
+    const $button = $(e.target);
+    const $article = $button.closest('article');
+    const $description = $button.siblings('p')
+    const truncatedText = $description.text().slice(0, 120) + ' ...';
+
+    $description.text(truncatedText);
+    $button.removeClass('show-less').addClass('show-more');
+    $button.text('Show more');
+  },
+  bind() {
+    $('button').on('click', e => {
+      const action = $(e.target).attr('class');
+
+      if (action === 'show-more') {
+        this.handleShowMore(e);
+      } else if (action === 'show-less') {
+        this.handleShowLess(e);
+      }
+    });
+    // $('.show-more').on('click', e => {
+    //   const $button = $(e.target);
+    //   const index = $button.closest('article').index('main article');
+    //   const originalTexts = this.languages.map(languages => languages.description);
+
+    //   this.$descriptions.eq(index).text(originalTexts[index]);
+    //   $button.removeClass('show-more').addClass('show-less');
+    //   $button.text('Show less');
+    // });
+
+    // $('.show-less').on('click', e => {
+    //   const $button = $(e.target);
+    //   const $article = $button.closest('article');
+    //   const truncatedText = $button.closest('p').text().slice(0, 120) + ' ...';
+
+    //   $button.closest('p').text(truncatedText);
+    //   $button.removeClass('show-less').addClass('show-more');
+    //   $button.text('Show more');
+    // })
+  },
+  init() {
+    this.renderContent();
+    this.truncate();
+    this.bind();
+  }
+}
+
+App.init();

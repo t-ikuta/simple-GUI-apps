@@ -87,6 +87,11 @@ h2 {
   margin-bottom: 7px;
   font-size: 20px;
 }
+
+p {
+  margin-bottom: 5px;
+}
+
 article {
   margin-bottom: 15px;
   padding-left: 10px;
