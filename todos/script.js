@@ -39,7 +39,6 @@ const App = {
   },
   deleteOvelayAndModal() {
     $('.overlay, .delete-modal').hide();
-    // $('.delete-modal').hide();
   },
   renderTodos() {
     const templateHTML = $('#todos-template').html();
@@ -51,7 +50,6 @@ const App = {
     this.renderTodos();
     this.handleTodoModal();
     this.id = null;
-    // this.handleModalDeletion();
   }
 }
 
