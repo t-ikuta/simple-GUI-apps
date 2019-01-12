@@ -61,3 +61,79 @@ html {
 }
 
 /*--- Custom Style ---*/
+
+html {
+  padding: 20px;
+  font: normal 16px Helvetica, Arial, sans-serif;
+  background: #FFEADF;
+}
+
+h1 {
+  margin-bottom: 30px;
+  font-size: 30px;
+}
+
+li {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  width: 450px;
+  height: 45px;
+  background: #fff;
+}
+
+a {
+  float: right;
+  display: inline;
+  padding-left: 10px;
+  text-decoration: none;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, .3);
+  z-index: 1;
+}
+
+.visible {
+  display: block;
+}
+
+.delete-modal {
+  display: none;
+  padding: 20px 10px;
+  margin: 0 auto;
+  width: 320px;
+  height: 110px;
+  background: #fff;
+  z-index: 2;
+}
+
+.delete-modal p {
+  margin-bottom: 20px;
+}
+
+.btn {
+  border: none;
+  border-radius: 5px;
+  width: 70px;
+  height: 30px;
+  color: #fff;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.delete-yes {
+  background: green;
+}
+
+.delete-no {
+  background: red;
+}
