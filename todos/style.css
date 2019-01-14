@@ -82,6 +82,31 @@ li {
   background: #fff;
 }
 
+ul.contextmenu {
+  position: absolute;
+  display: none;
+}
+
+ul.contextmenu > li {
+  margin-bottom: 0;
+  border-top: 1px solid #fff;
+  border-radius: 5px;
+  width: 200px;
+  height: 40px;
+  background: #eaeaea;
+  color: #fff; 
+}
+
+ul.contextmenu > li:hover {
+  cursor: pointer;
+  background: #D2E7FF;
+  color: indigo;
+}
+
+ul.contextmenu li:first-of-type {
+  border-top: none;
+}
+
 a {
   float: right;
   display: inline;
