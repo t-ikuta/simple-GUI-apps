@@ -17,6 +17,9 @@ const App = {
       return $(this).attr('data-id') === id;
     }).remove();
 
+    // using arrow function
+    // $('li').filter((index, el) => $(el).attr('data-id') === id ).remove();
+
     // const lis = Array.prototype.slice.call(document.querySelectorAll('li')).filter(el => {
     //   return $(el).attr('data-id') === this.id;
     // })
@@ -27,32 +30,34 @@ const App = {
   handleTodoDeletion(id) {
     $(document).on('click', e => {
       e.preventDefault();
-
       var $e = $(e.target);
       if ($e.prop('tagName') === 'LI' && $e.attr('class') === 'delete') {
-        this.deleteTodo(id);
+        this.showModal();
+        this.handleModal(id)
+        // this.deleteTodo(id);
       }
 
       $('.contextmenu').remove();
     })
   },
-  // handleTodoDeletion() {
-  //   $('.overlay, .delete-no').on('click', e => this.deleteOvelayAndModal());
-  //   $('.delete-yes').on('click', e => this.deleteTodo())
-  // },
-  handleTodoModal() {
-    // $('li').on('contextmenu', e => {
-    //   e.preventDefault();
-    //   // this.id = $(e.target).parent('li').attr('data-id');
-    //   // this.showModal();
-    //   // this.handleTodoDeletion();
-    // })
+  handleModal(id) {
+    $('.overlay, .delete-no').on('click', e => this.deleteOvelayAndModal());
+    $('.delete-yes').on('click', e => this.deleteTodo(id))
   },
+  // handleTodoModal() {
+  //   // $('li').on('contextmenu', e => {
+  //   //   e.preventDefault();
+  //   //   // this.id = $(e.target).parent('li').attr('data-id');
+  //   //   // this.showModal();
+  //   //   // this.handleTodoDeletion();
+  //   // })
+  // },
   handleContextMenu() {
     $('li').on('contextmenu', e => {
       e.preventDefault();
       const id = $(e.target).attr('data-id');
       this.renderContextMenu(id, e.pageX, e.pageY);
+      this.handleTodoDeletion(id);
     });
   },
   deleteOvelayAndModal() {
@@ -67,7 +72,6 @@ const App = {
     const contextmenuTemplate = Handlebars.compile(templateHTML);
     const contextmenuHTML = contextmenuTemplate({id: id});
     $(contextmenuHTML).insertAfter('h1').offset({top: y, left: x}).fadeIn(200);
-    this.handleTodoDeletion(id);
   },
   renderTodos() {
     const templateHTML = $('#todos-template').html();
