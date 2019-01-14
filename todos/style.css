@@ -84,7 +84,6 @@ li {
 
 ul.contextmenu {
   position: absolute;
-  display: none;
 }
 
 ul.contextmenu > li {
@@ -123,10 +122,6 @@ a {
   width: 100%;
   background: rgba(0, 0, 0, .3);
   z-index: 1;
-}
-
-.visible {
-  display: block;
 }
 
 .delete-modal {

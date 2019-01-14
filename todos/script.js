@@ -28,36 +28,30 @@ const App = {
     this.deleteOvelayAndModal();
   },
   handleTodoDeletion(id) {
-    $(document).on('click', e => {
-      e.preventDefault();
-      var $e = $(e.target);
-      if ($e.prop('tagName') === 'LI' && $e.attr('class') === 'delete') {
-        this.showModal();
-        this.handleModal(id)
-        // this.deleteTodo(id);
-      }
-
+    $('li.delete').on('click', e => {
+      this.showModal();
+      this.handleModal(id)
       $('.contextmenu').remove();
     })
   },
   handleModal(id) {
     $('.overlay, .delete-no').on('click', e => this.deleteOvelayAndModal());
-    $('.delete-yes').on('click', e => this.deleteTodo(id))
+    $('.delete-yes').on('click', e => {
+      this.deleteTodo(id)
+    })
   },
-  // handleTodoModal() {
-  //   // $('li').on('contextmenu', e => {
-  //   //   e.preventDefault();
-  //   //   // this.id = $(e.target).parent('li').attr('data-id');
-  //   //   // this.showModal();
-  //   //   // this.handleTodoDeletion();
-  //   // })
-  // },
+  handleContextMenuDeletion() {
+    $('html').on('click', e => {
+      $('.contextmenu').hide();
+    })
+  },
   handleContextMenu() {
     $('li').on('contextmenu', e => {
       e.preventDefault();
       const id = $(e.target).attr('data-id');
       this.renderContextMenu(id, e.pageX, e.pageY);
       this.handleTodoDeletion(id);
+      this.handleContextMenuDeletion();
     });
   },
   deleteOvelayAndModal() {
@@ -71,7 +65,8 @@ const App = {
     const templateHTML = $('#contextmenu-template').html();
     const contextmenuTemplate = Handlebars.compile(templateHTML);
     const contextmenuHTML = contextmenuTemplate({id: id});
-    $(contextmenuHTML).insertAfter('h1').offset({top: y, left: x}).fadeIn(200);
+
+    $('.contextmenu-container').html(contextmenuHTML).offset({top: y, left: x}).fadeIn(200);
   },
   renderTodos() {
     const templateHTML = $('#todos-template').html();
@@ -82,8 +77,6 @@ const App = {
   init() {
     this.renderTodos();
     this.handleContextMenu();
-    // this.handleTodoModal();
-    // this.id = null;
   }
 }
 
