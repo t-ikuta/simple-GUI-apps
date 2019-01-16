@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.js"></script>
   </head>
   <body>
     <header>
@@ -74,5 +74,22 @@
     </header>
     <main>
     </main>
+    <script type="text/x-handlebars" id="car_info_template_partial">
+      <ul>
+        <li><img src="{{image}}" alt="car_info"></li>
+        <li class="name">{{make}} {{model}}</li>
+        <li>Year: {{year}}</li>
+        <li>Price: {{price}}</li>
+        <li><button>Buy</button></li>
+      </ul>
+    </script>
+    <script type="text/x-handlebars" id="car_info_template">
+      {{#each cars}}
+        <div class="car_info">
+          {{> car}}
+        </div>
+      {{/each}}
+    </script>
+    <script type="text/javascript" src="script.js"></script>
   </body>
 </html>

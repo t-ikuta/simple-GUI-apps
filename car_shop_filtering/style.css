@@ -64,6 +64,7 @@ html {
 
 header {
   padding: 10px;
+  margin-bottom: 20px;
   display: block;
   height: 100px;
   width: 100%;
@@ -89,8 +90,6 @@ select, button {
   width: 85px;
   height: 25px;
   background: transparent;
-  /*-webkit-appearance: none;*/
-  /*outline: none;*/
 }
 
 button {
@@ -102,4 +101,27 @@ button:hover {
   color: #FFCD97;
   background: indigo;
   cursor: pointer;
+}
+
+main {
+  padding: 20px;
+}
+
+.car_info {
+  display: inline-block;
+  padding: 8px;
+  margin-bottom: 20px;
+  width: 19.5%;
+}
+
+.car_info li {
+  padding: 5px 0;
+}
+
+.car_info img {
+  width: 100%;
+}
+
+.name {
+  font-weight: bold;
 }
