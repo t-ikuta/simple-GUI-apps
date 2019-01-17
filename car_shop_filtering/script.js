@@ -12,7 +12,29 @@ const App = {
   cars: cars,
   carInfoTemplate: Handlebars.compile($('#car_info_template').html()),
   carInfoTemplatePartial: Handlebars.registerPartial('car', $('#car_info_template_partial').html()),
+  carOptionsTemplate: Handlebars.compile($('#car_options_template').html()),
+  removeDuplicateOptions() {
+    const keys = Object.keys(this.cars[0]);
+    let usedOptions = [];
+
+    keys.forEach(key => {
+      const $options = $(`#${key} option`);
+      $options.each(function() {
+        const optionValue = $(this).text();
+        if (usedOptions.includes(optionValue)) {
+          $(this).remove();
+        } else {
+          usedOptions.push(optionValue);          
+        }
+      })
+
+      usedOptions = [];
+    })
+    
+  },
   renderCarInfo() {
+    $('dl').append(this.carOptionsTemplate({cars: this.cars}));
+    this.removeDuplicateOptions();
     $('main').append(this.carInfoTemplate({cars: this.cars}));
   },
   init() {
