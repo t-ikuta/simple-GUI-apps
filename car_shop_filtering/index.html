@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore.js"></script>
   </head>
   <body>
     <header>
@@ -24,7 +25,7 @@
       </dt>
       <dd>
         <select name="make" id="make">
-          <option>All</option>
+          <option value="">All</option>
           {{#each cars}}
           <option>{{make}}</option>
           {{/each}}
@@ -35,7 +36,7 @@
       </dt>
       <dd>
         <select name="model" id="model">
-          <option>All</option>
+          <option value="">All</option>
           {{#each cars}}
           <option>{{model}}</option>
           {{/each}}
@@ -46,7 +47,7 @@
       </dt>
       <dd>
         <select name="price" id="price">
-          <option>Any</option>
+          <option value="">Any</option>
           {{#each cars}}
           <option>{{price}}</option>
           {{/each}}
@@ -57,7 +58,7 @@
       </dt>
       <dd>
         <select name="year" id="year">
-          <option>Any</option>
+          <option value="">Any</option>
           {{#each cars}}
           <option>{{year}}</option>
           {{/each}}

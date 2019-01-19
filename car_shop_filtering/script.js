@@ -47,34 +47,33 @@ const App = {
   stringToJSON(string) {
     const json = {};
     const arr = string.split('&').map(el => el.split('='));
-    arr.forEach(el => { json[el[0]] = el[1] });
+    arr.forEach(el => {
+      const key = el[0];
+      let value = el[1];
+
+      // convert year/price to integer
+      if (['year', 'price'].includes(key)) value = +value;
+
+      if (value) json[key] = value;
+    });
 
     return json;
   },
-  // areSameObjects(obj1, obj2) {
-  //   let result = true;
-
-  //   if (Object.keys(obj1).length !== Object.keys(obj2).length) {
-  //     return false;
-  //   }
-
-  //   Object.keys(obj1).forEach(key => {
-  //     if (obj1[key] !== obj2[key]) {
-  //       result = false;
-  //     }
-  //   });
-
-  //   return result;
+  // isSearchedCar(car, criteria) {
+  //   return (criteria.make === 'All' || criteria.make === car.make) &&
+  //          (criteria.model === 'All' || criteria.model === car.model) &&
+  //          (criteria.year === 'Any' || Number(criteria.year) === car.year) &&
+  //          (criteria.price === 'Any' || Number(criteria.price) === car.price);
   // },
-  isSearchedCar(car, criteria) {
-    return (criteria.make === 'All' || criteria.make === car.make) &&
-           (criteria.model === 'All' || criteria.model === car.model) &&
-           (criteria.year === 'Any' || Number(criteria.year) === car.year) &&
-           (criteria.price === 'Any' || Number(criteria.price) === car.price);
-  },
+  // filterCarInfo(json) {
+  //   const $carInfo = $('.car_info');
+  //   this.cars = cars.filter(car => this.isSearchedCar(car, json));
+
+  //   this.renderCarInfo();
+  // },
   filterCarInfo(json) {
     const $carInfo = $('.car_info');
-    this.cars = cars.filter(car => this.isSearchedCar(car, json));
+    this.cars = _.where(cars, json);
 
     this.renderCarInfo();
   },
