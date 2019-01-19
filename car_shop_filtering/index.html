@@ -36,10 +36,7 @@
       </dt>
       <dd>
         <select name="model" id="model">
-          <option value="">All</option>
-          {{#each models}}
-          <option value="{{.}}">{{.}}</option>
-          {{/each}}
+        {{> car_models_template}}
         </select>
       </dd>
       <dt>
@@ -80,6 +77,12 @@
         <div class="car_info">
           {{> car}}
         </div>
+      {{/each}}
+    </script>
+    <script type="text/x-handlebars" id="car_models_template">
+      <option value="">All</option>
+      {{#each models}}
+      <option value="{{.}}">{{.}}</option>
       {{/each}}
     </script>
     <script type="text/javascript" src="script.js"></script>

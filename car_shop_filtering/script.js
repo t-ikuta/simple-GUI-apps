@@ -1,3 +1,5 @@
+Handlebars.registerPartial('car', $('#car_info_template_partial').html());
+Handlebars.registerPartial('car_models_template', $('#car_models_template').html());
 const cars = [
   { make: 'Honda', image: 'images/honda-accord-2005.jpg', model: 'Accord', year: 2005, price: 7000 },
   { make: 'Honda', image: 'images/honda-accord-2008.jpg', model: 'Accord', year: 2008, price: 11000 },
@@ -12,8 +14,8 @@ const App = {
   $form: $('form'),
   cars: cars,
   carInfoTemplate: Handlebars.compile($('#car_info_template').html()),
-  carInfoTemplatePartial: Handlebars.registerPartial('car', $('#car_info_template_partial').html()),
   carOptionsTemplate: Handlebars.compile($('#car_options_template').html()),
+  carModelsTemplate: Handlebars.compile($('#car_models_template').html()),
   removeDuplicateOptions() {
     const keys = Object.keys(this.cars[0]);
     let usedOptions = [];
@@ -46,6 +48,9 @@ const App = {
   },
   renderCarInfo(cars) {
     $('main').html(this.carInfoTemplate({ cars: cars }));
+  },
+  renderCarModels(models) {
+    $('#model').html(this.carModelsTemplate({ models: models }));
   },
   renderCarOptionsAndInfo() {
     this.renderCarOptions(this.cars);
@@ -99,15 +104,16 @@ const App = {
 
       if (make) {
         const selectedCars = _.where(this.cars, {make: make});
-        this.renderCarOptions(this.cars, {models: _.pluck(selectedCars, 'model')});
+        // this.renderCarOptions(this.cars, {models: _.pluck(selectedCars, 'model')});
+        this.renderCarModels(_.uniq(_.pluck(selectedCars, 'model')));
 
         // make sure the selected make remains selected after being re-rendered
         // e.target not available as the template has been re-rendered
-        const $make = $('#make').find('option').filter(function() {
-          return $(this).val() === make;
-        })
+        // const $make = $('#make').find('option').filter(function() {
+        //   return $(this).val() === make;
+        // })
 
-        $make.attr('selected', true);
+        // $make.attr('selected', true);
       }
     });
   },
