@@ -9,6 +9,7 @@ const cars = [
 ];
 
 const App = {
+  $form: $('form'),
   cars: cars,
   carInfoTemplate: Handlebars.compile($('#car_info_template').html()),
   carInfoTemplatePartial: Handlebars.registerPartial('car', $('#car_info_template_partial').html()),
@@ -32,13 +33,63 @@ const App = {
     })
     
   },
-  renderCarInfo() {
+  renderCarOptions() {
     $('dl').append(this.carOptionsTemplate({cars: this.cars}));
     this.removeDuplicateOptions();
-    $('main').append(this.carInfoTemplate({cars: this.cars}));
+  },
+  renderCarInfo() {
+    $('main').html(this.carInfoTemplate({cars: this.cars}));
+  },
+  renderCarOptionsAndInfo() {
+    this.renderCarOptions();
+    this.renderCarInfo();
+  },
+  stringToJSON(string) {
+    const json = {};
+    const arr = string.split('&').map(el => el.split('='));
+    arr.forEach(el => { json[el[0]] = el[1] });
+
+    return json;
+  },
+  // areSameObjects(obj1, obj2) {
+  //   let result = true;
+
+  //   if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+  //     return false;
+  //   }
+
+  //   Object.keys(obj1).forEach(key => {
+  //     if (obj1[key] !== obj2[key]) {
+  //       result = false;
+  //     }
+  //   });
+
+  //   return result;
+  // },
+  isSearchedCar(car, criteria) {
+    return (criteria.make === 'All' || criteria.make === car.make) &&
+           (criteria.model === 'All' || criteria.model === car.model) &&
+           (criteria.year === 'Any' || Number(criteria.year) === car.year) &&
+           (criteria.price === 'Any' || Number(criteria.price) === car.price);
+  },
+  filterCarInfo(json) {
+    const $carInfo = $('.car_info');
+    this.cars = cars.filter(car => this.isSearchedCar(car, json));
+
+    this.renderCarInfo();
+  },
+  handleFilter() {
+    this.$form.on('submit', e => {
+      e.preventDefault();
+      const formString = $(e.target).serialize();
+      const formJSON = this.stringToJSON(formString);
+
+      this.filterCarInfo(formJSON);
+    });
   },
   init() {
-    this.renderCarInfo();
+    this.renderCarOptionsAndInfo();
+    this.handleFilter();
   }
 };
 
