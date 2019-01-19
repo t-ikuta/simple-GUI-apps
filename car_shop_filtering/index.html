@@ -26,8 +26,8 @@
       <dd>
         <select name="make" id="make">
           <option value="">All</option>
-          {{#each cars}}
-          <option>{{make}}</option>
+          {{#each makes}}
+          <option value="{{.}}">{{.}}</option>
           {{/each}}
         </select>
       </dd>
@@ -37,8 +37,8 @@
       <dd>
         <select name="model" id="model">
           <option value="">All</option>
-          {{#each cars}}
-          <option>{{model}}</option>
+          {{#each models}}
+          <option value="{{.}}">{{.}}</option>
           {{/each}}
         </select>
       </dd>
@@ -48,8 +48,8 @@
       <dd>
         <select name="price" id="price">
           <option value="">Any</option>
-          {{#each cars}}
-          <option>{{price}}</option>
+          {{#each prices}}
+          <option value="{{.}}">{{.}}</option>
           {{/each}}
         </select>
       </dd>
@@ -59,8 +59,8 @@
       <dd>
         <select name="year" id="year">
           <option value="">Any</option>
-          {{#each cars}}
-          <option>{{year}}</option>
+          {{#each years}}
+          <option value="{{.}}">{{.}}</option>
           {{/each}}
         </select>
       </dd>

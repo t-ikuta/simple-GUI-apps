@@ -33,16 +33,23 @@ const App = {
     })
     
   },
-  renderCarOptions() {
-    $('dl').append(this.carOptionsTemplate({cars: this.cars}));
+  renderCarOptions(cars, option={}) {
+    const criteria = {
+      makes: option.makes || _.pluck(cars, 'make'),
+      models: option.models || _.pluck(cars, 'model'),
+      years: option.years || _.pluck(cars, 'year'),
+      prices: option.prices || _.pluck(cars, 'price'),
+    };
+
+    $('dl').html(this.carOptionsTemplate(criteria));
     this.removeDuplicateOptions();
   },
-  renderCarInfo() {
-    $('main').html(this.carInfoTemplate({cars: this.cars}));
+  renderCarInfo(cars) {
+    $('main').html(this.carInfoTemplate({ cars: cars }));
   },
   renderCarOptionsAndInfo() {
-    this.renderCarOptions();
-    this.renderCarInfo();
+    this.renderCarOptions(this.cars);
+    this.renderCarInfo(this.cars);
   },
   stringToJSON(string) {
     const json = {};
@@ -73,9 +80,8 @@ const App = {
   // },
   filterCarInfo(json) {
     const $carInfo = $('.car_info');
-    this.cars = _.where(cars, json);
-
-    this.renderCarInfo();
+    const cars = _.where(this.cars, json);
+    this.renderCarInfo(cars);
   },
   handleFilter() {
     this.$form.on('submit', e => {
@@ -86,9 +92,29 @@ const App = {
       this.filterCarInfo(formJSON);
     });
   },
+  handleMakeSelection() {
+    this.$form.on('change', '#make', e => {
+      const $selectedOption = $(e.target).find(':selected');
+      const make = $selectedOption.val();
+
+      if (make) {
+        const selectedCars = _.where(this.cars, {make: make});
+        this.renderCarOptions(this.cars, {models: _.pluck(selectedCars, 'model')});
+
+        // make sure the selected make remains selected after being re-rendered
+        // e.target not available as the template has been re-rendered
+        const $make = $('#make').find('option').filter(function() {
+          return $(this).val() === make;
+        })
+
+        $make.attr('selected', true);
+      }
+    });
+  },
   init() {
     this.renderCarOptionsAndInfo();
     this.handleFilter();
+    this.handleMakeSelection();
   }
 };
 
