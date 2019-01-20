@@ -48,6 +48,11 @@ table {
   border-spacing: 0;
 }
 
+/*--- remove border inset for input elements ---*/
+input {
+  border: 1px solid #000;
+}
+
 /*--- Box Sizing ---*/
 html {
   -webkit-box-sizing: border-box;
@@ -111,4 +116,8 @@ button {
 button:hover {
   cursor: pointer;
   color: #fefefe;
+}
+
+.error_field {
+  border-color: red;
 }
