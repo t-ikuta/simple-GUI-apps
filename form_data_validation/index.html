@@ -10,36 +10,42 @@
     <h1>Sign up</h1>
     <form novalidate>
       <fieldset>
+        <span class="form_error"></span>
         <dl>
           <dt>
             <label for="first_name">First Name</label>
           </dt>
           <dd>
             <input type="text" name="first_name" id="first_name" required>
+            <span class="error_message"></span>
           </dd>
           <dt>
             <label for="last_name">Last Name</label>
           </dt>
           <dd>
             <input type="text" name="last_name" id="last_name" required>
+            <span class="error_message"></span>
           </dd>
           <dt>
             <label for="email">Email</label>
           </dt>
           <dd>
             <input type="email" name="email" id="email" placeholder="example@gmail.com" pattern=".+@.+" required>
+            <span class="error_message"></span>
           </dd>
           <dt>
             <label for="password">Password</label>
           </dt>
           <dd>
             <input type="password" name="password" id="password" minlength="10" required>
+            <span class="error_message"></span>
           </dd>
           <dt>
             <label for="phone_number">Phone Number</label>
           </dt>
           <dd>
-            <input type="tel" name="phone_number" id="phone_number" pattern="\d{3}-\d{3}-\d{4}"placeholder="1234-567-890">
+            <input type="tel" name="phone_number" id="phone_number" pattern="\d{3}-\d{3}-\d{4}"placeholder="123-456-7890">
+            <span class="error_message"></span>
           </dd>
           <button>Sign Up</button>
         </dl>
