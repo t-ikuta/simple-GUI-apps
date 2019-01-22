@@ -10,7 +10,7 @@
     <h1>Sign up</h1>
     <form novalidate>
       <fieldset>
-        <span class="form_error"></span>
+        <span class="form_message"></span>
         <dl>
           <dt>
             <label for="first_name">First Name</label>
@@ -45,6 +45,16 @@
           </dt>
           <dd>
             <input type="tel" name="phone_number" id="phone_number" pattern="\d{3}-\d{3}-\d{4}"placeholder="123-456-7890">
+            <span class="error_message"></span>
+          </dd>
+          <dt>
+            <label for="credit_card">Credit Card</label>
+          </dt>
+          <dd>
+            <input type="text" name="cc" maxlength="4" pattern="\d{4}" id="cc1" data-cc-label="credit_card" placeholder="****" required><span>-</span><!--
+            --><input type="text" name="cc" maxlength="4" pattern="\d{4}" id="cc2" data-cc-label="credit_card" placeholder="****" required><span>-</span><!--
+            --><input type="text" name="cc" maxlength="4" pattern="\d{4}" id="cc3" data-cc-label="credit_card" placeholder="****" required><span>-</span><!--
+            --><input type="text" name="cc" maxlength="4" pattern="\d{4}" id="cc4" data-cc-label="credit_card" placeholder="****" required>
             <span class="error_message"></span>
           </dd>
           <button>Sign Up</button>
