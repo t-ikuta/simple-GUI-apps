@@ -1,7 +1,10 @@
 const App = {
   $form: $('form'),
+  getFieldName($input) {
+    return this.$form.find(`[for=${$input.attr('id')}]`).text();
+  },
   determineErrorMessage($input) {
-    const field = this.$form.find(`[for=${$input.attr('id')}]`).text();
+    const field = this.getFieldName($input);
     const errorTypes = $input[0].validity;
     let errorMessage;
 
@@ -16,10 +19,13 @@ const App = {
       let validFormat;
       if (field === 'Email') {
         validFormat = 'example@email.com';
+        errorMessage = `The format of ${field} is invalid. The valid format is as follows: ${validFormat}`;
       } else if (field === 'Phone Number') {
         validFormat = '123-123-1234';
+        errorMessage = `The format of ${field} is invalid. The valid format is as follows: ${validFormat}`;
+      } else if (field === 'First Name' || field === 'Last Name') {
+        errorMessage = `${field} should only consist of alphabetical characters.`
       }
-      errorMessage = `The format of ${field} is invalid. The valid format is as follows: ${validFormat}`;
     }
 
     return errorMessage;
@@ -76,14 +82,26 @@ const App = {
     e.preventDefault();
 
     const errorCount = this.countErrors();
-
     if (errorCount) {
       this.displayErrorMessage(this.$form);
+    }
+  },
+  validateKey(e) {
+    const $input = $(e.target);
+    const field = this.getFieldName($input);
+    const key = e.key;
+
+    if (field === 'First Name' || field === 'Last Name') {
+      const namePattern = /[a-z'\s]/i;
+      if (!namePattern.test(key)) {
+        e.preventDefault();
+      }
     }
   },
   init() {
     $('input').on('blur', e => this.validateInputOnBlur(e));
     $('input').on('focus', e => this.validateInputOnFocus(e));
+    $('input').on('keypress', e => this.validateKey(e));
     this.$form.on('submit', e => this.validateForm(e));
   }
 }
