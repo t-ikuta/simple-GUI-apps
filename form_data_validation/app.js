@@ -26,10 +26,10 @@ const App = {
   },
   countErrors() {
     let errorCount = 0;
-
+    const self = this;
     this.$form.find('input').each(function() {
       if (!$(this)[0].checkValidity()) {
-        this.displayErrorMessage($(this));
+        self.displayErrorMessage($(this));
         errorCount += 1;
       }
     });
@@ -37,22 +37,30 @@ const App = {
     return errorCount;
   },
   displayErrorMessage($element) {
-    // TODO
+    let errorMessage;
+
+    if ($element.prop('tagName') === 'INPUT') {
+      errorMessage = this.determineErrorMessage($element);
+      $element.next('span.error_message').text(errorMessage);
+      $element.addClass('input_error');
+    } else if ($element.prop('tagName') === 'FORM') {
+      errorMessage = 'Please correct invalid field(s) before submitting the form.';
+      const $formErrorbox = this.$form.find('span.form_error');
+      $formErrorbox.addClass('form_error');
+      $formErrorbox.text(errorMessage);      
+    }
   },
   validateInputOnBlur(e) {
     const $input = $(e.target);
-    debugger;
+
     if (!$input[0].checkValidity()) {
-      const errorMessage = this.determineErrorMessage($input);
-      if (errorMessage) {
-        $input.next('span.error_message').text(errorMessage);
-        $input.addClass('input_error');
-      }
+      this.displayErrorMessage($input);
     } else {
       // remove error message for the previously invalid field
       $input.next('span.error_message').text('');
       $input.removeClass('input_error');
 
+      // remove error for the form when there is no error
       const errorCount = this.countErrors();
       if (!errorCount) {
         $('span.form_error').text('');
@@ -67,14 +75,10 @@ const App = {
   validateForm(e) {
     e.preventDefault();
 
-    const errorMessage = 'Please correct invalid field(s) before submitting the form.';
     const errorCount = this.countErrors();
 
     if (errorCount) {
-      // TODO: replace the below with the displayErrorMessage method
-      const $formErrorbox = this.$form.find('span.form_error');
-      $formErrorbox.addClass('form_error');
-      $formErrorbox.text(errorMessage);
+      this.displayErrorMessage(this.$form);
     }
   },
   init() {
