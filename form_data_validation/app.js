@@ -1,5 +1,6 @@
 const App = {
   $form: $('form'),
+  $inputs: $('input'),
   getFieldName($input) {
     return this.$form.find(`[for=${$input.attr('data-cc-label') || $input.attr('id')}]`).text();
   },
@@ -74,7 +75,7 @@ const App = {
   },
   validateInputOnBlur(e) {
     const $input = $(e.target);
-    debugger;
+
     if (!$input[0].checkValidity()) {
       this.displayErrorMessage($input);
     } else {
@@ -121,10 +122,27 @@ const App = {
       if (!pattern.test(key)) e.preventDefault();
     }
   },
+  tabForward($cc) {
+    const value = $cc.val();
+
+    if (value.length === 3) {
+      const nextId = Number($cc.attr('id')[2]) + 1;
+      $(`#cc${nextId}`).trigger('focus');
+    }
+  },
+  handleTabForwarding(e) {
+    const $cc = $(e.target);
+    const index = $cc.index('input[name=cc]');
+
+    if (index < 3) {
+      this.tabForward($cc);
+    }
+  },
   bindEventsOnInput() {
-    $('input').on('blur', e => this.validateInputOnBlur(e));
-    $('input').on('focus', e => this.validateInputOnFocus(e));
-    $('input').on('keypress', e => this.validateKey(e));
+    this.$inputs.on('blur', e => this.validateInputOnBlur(e));
+    this.$inputs.on('focus', e => this.validateInputOnFocus(e));
+    this.$inputs.on('keypress', e => this.validateKey(e));
+    this.$inputs.filter('[name=cc]').on('keypress', e => this.handleTabForwarding(e));
   },
   init() {
     this.bindEventsOnInput();
