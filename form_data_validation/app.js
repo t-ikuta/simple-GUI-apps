@@ -133,7 +133,6 @@ const App = {
   handleTabForwarding(e) {
     const $cc = $(e.target);
     const index = $cc.index('input[name=cc]');
-
     if (index < 3) {
       this.tabForward($cc);
     }
