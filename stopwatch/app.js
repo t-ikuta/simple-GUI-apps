@@ -25,13 +25,13 @@ const App = {
   },
   countSeconds() {
     let $seconds = $('#seconds');
-    $seconds.text(Number($seconds.text()) + 1);
+    const updatedSeconds = +$seconds.text() + 1;
 
-    const seconds = $seconds.text();
+    $seconds.text(updatedSeconds);
 
-    if (Number(seconds) < 10) {
-      $seconds.text('0' + seconds);
-    } else if (Number(seconds) === 60) {
+    if (updatedSeconds < 10) {
+      $seconds.text('0' + updatedSeconds);
+    } else if (updatedSeconds === 60) {
       $seconds.text('00');
       this.countMinutes();
     }
