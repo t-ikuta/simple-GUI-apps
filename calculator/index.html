@@ -5,44 +5,44 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="app.js"></script>
   </head>
   <body>
     <main>
-      <div class="operation">1 + 2</div>
-      <div class="entry">3</div>
+      <div class="operation"></div>
+      <div class="entry">0</div>
       <div class="keys">
         <div class="row">
-          <span class="">CE</span>
-          <span class="">C</span>
-          <span class="">NEG</span>
-          <span class="">/</span>
+          <span data-operation="ce">CE</span>
+          <span data-operation="c">C</span>
+          <span data-operation="neg">NEG</span>
+          <span data-operation="/">÷</span>
         </div>
         <div class="row">
           <span>7</span>
           <span>8</span>
           <span>9</span>
-          <span>x</span>
+          <span data-operation="*">x</span>
         </div>
         <div class="row">
           <span>4</span>
           <span>5</span>
           <span>6</span>
-          <span>-</span>
+          <span data-operation="-">-</span>
         </div>
         <div class="row">
           <span>1</span>
           <span>2</span>
           <span>3</span>
-          <span>+</span>
+          <span data-operation="+">+</span>
         </div>
         <div class="row">
           <span>0</span>
           <span>.</span>
-          <span>%</span>
-          <span>=</span>
+          <span data-operation="%">%</span>
+          <span data-operation="=">=</span>
         </div>
       </div>
     </main>
+    <script type="text/javascript" src="app.js"></script>
   </body>
 </html>

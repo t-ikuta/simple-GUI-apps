@@ -77,17 +77,17 @@ main {
   padding: 30px 10px 10px 10px;
   border-radius: 5px;
   width: 350px;
-  height: 410px;
+  height: 390px;
   background: #fefefe;
 }
 
 .operation, .entry {
-  margin-bottom: 20px;
+  padding-bottom: 10px;
+  height: 40px;
   text-align: right;
 }
 
 .entry {
-  padding-bottom: 7px;
   border-bottom: 1px solid #eaeaea;
   font-size: 35px;
 }
