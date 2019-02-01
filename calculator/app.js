@@ -19,7 +19,6 @@ const App = {
         }
         break;
       case '=':
-        this.$operation.text('');
         this.$entry.text(this.result);
         break;
       default:
@@ -58,7 +57,7 @@ const App = {
     this.isInitialEntry = true;
   },
   getFinalResult(currentEntry) {
-    const lastOperation = this.operations[this.operations.length - 2];
+    const lastOperation = this.operations[this.operations.length - 1];
 
     switch (lastOperation) {
       case '+':
