@@ -18,9 +18,9 @@ const App = {
           currentEntry.textContent = '-' + currentEntry.textContent;
         }
         break;
-      case '=':
-        this.$entry.text(this.result);
-        break;
+      // case '=':
+      //   this.$entry.text(this.result);
+      //   break;
       default:
         this.$entry.text(this.result);
     }
@@ -28,6 +28,7 @@ const App = {
     // currentEntry.textContent = this.result;
   },
   updateOperation(operationType, currentEntry, currentOperation) {
+    debugger;
     switch (operationType) {
       case 'c':
         currentOperation.textContent = '';
@@ -49,7 +50,7 @@ const App = {
         break;
     }
 
-    this.operations.push(operationType);
+    if (operationType !== 'ce') this.operations.push(operationType);
   },
   resetConfig() {
     this.operations = [];
@@ -77,92 +78,50 @@ const App = {
   updateResult(operationType, currentEntry, currentOperation) {
     // this.operations.push(operationType);
     // const lastOperation = this.operations[this.operations.length - 1];
-    debugger;
-    if (operationType) {
-      if (['c', 'neg', '='].includes(operationType)) {
-        switch(operationType) {
-          case 'c':
-            this.result = 0;
-            this.resetConfig();
-            break;
-          case 'neg':
-            this.result = -this.result;
-            break;
-          case '=':
-            this.result = this.getFinalResult(currentEntry);
-            this.resetConfig();
-            break;
-        }
-      } else {
-        const length = this.operations.length;
-        const prevOperation = this.operations[length === 1 ? 0 : length - 1];
-
-        switch(prevOperation) {
-          case '/':
-            if (!currentOperation.textContent) return;
-            this.result /= +currentEntry.textContent;
-            break;
-          case '*':
-            if (!currentOperation.textContent) return;
-            this.result *= +currentEntry.textContent;
-            break;
-          case '+':
-            if (!currentOperation.textContent) return;
-            this.result += +currentEntry.textContent;
-            break;
-          case '-':
-            if (!currentOperation.textContent) return;
-            this.result -= +currentEntry.textContent;
-            break;
-          case '%':
-            if (!currentOperation.textContent) return;
-            this.result %= +currentEntry.textContent;
-            break;
-        }
+    if (['c', 'ce', 'neg', '='].includes(operationType)) {
+      switch(operationType) {
+        case 'c':
+          this.result = 0;
+          this.resetConfig();
+          break;
+        case 'ce':
+          debugger;
+          return;
+        case 'neg':
+          this.result = -this.result;
+          break;
+        case '=':
+          this.result = this.getFinalResult(currentEntry);
+          this.resetConfig();
+          break;
       }
     } else {
-      // first input
-      this.result = +currentEntry.textContent;
-    }
-    // if (operationType) {
-    //   switch(operationType) {
-    //     case 'c':
-    //       this.result = 0;
-    //       this.resetConfig();
-    //       break;
-    //     case 'neg':
-    //       this.result = -this.result;
-    //       break;
-    //     case '=':
-    //       this.result = this.getFinalResult(currentEntry);
-    //       this.resetConfig();
-    //       break;
-    //     case '/':
-    //       if (!currentOperation.textContent) return;
-    //       this.result /= +currentEntry.textContent;
-    //       break;
-    //     case '*':
-    //       if (!currentOperation.textContent) return;
-    //       this.result *= +currentEntry.textContent;
-    //       break;
-    //     case '+':
-    //       if (!currentOperation.textContent) return;
-    //       this.result += +currentEntry.textContent;
-    //       break;
-    //     case '-':
-    //       if (!currentOperation.textContent) return;
-    //       this.result -= +currentEntry.textContent;
-    //       break;
-    //     case '%':
-    //       if (!currentOperation.textContent) return;
-    //       this.result %= +currentEntry.textContent;
-    //       break;
-    //   }
-    // } else {
-    //   // first input
-    //   this.result = +currentEntry.textContent;
-    // }
+      const length = this.operations.length;
+      const prevOperation = this.operations[length - 1];
 
+      switch(prevOperation) {
+        case '/':
+          if (!currentOperation.textContent) return;
+          this.result /= +currentEntry.textContent;
+          break;
+        case '*':
+          if (!currentOperation.textContent) return;
+          this.result *= +currentEntry.textContent;
+          break;
+        case '+':
+          if (!currentOperation.textContent) return;
+          this.result += +currentEntry.textContent;
+          break;
+        case '-':
+          if (!currentOperation.textContent) return;
+          this.result -= +currentEntry.textContent;
+          break;
+        case '%':
+          if (!currentOperation.textContent) return;
+          this.result %= +currentEntry.textContent;
+          break;
+      }
+    }
     console.log(this.result);
   },
   handleKeys() {
@@ -180,6 +139,7 @@ const App = {
         this.entryReset = true;
       } else {
         // Number entered
+        debugger;
         if (this.entryReset) {
           // update entryReset
           currentEntry.textContent = lastEntry;
