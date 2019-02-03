@@ -4,7 +4,6 @@ const App = {
   result: 0,
   operations: [],
   entryReset: true,
-  isInitialEntry: true,
   updateEntry(operationType, currentEntry) {
     switch (operationType) {
       case 'c':
@@ -18,14 +17,9 @@ const App = {
           currentEntry.textContent = '-' + currentEntry.textContent;
         }
         break;
-      // case '=':
-      //   this.$entry.text(this.result);
-      //   break;
       default:
         this.$entry.text(this.result);
     }
-
-    // currentEntry.textContent = this.result;
   },
   updateOperation(operationType, currentEntry, currentOperation) {
     debugger;
@@ -55,7 +49,6 @@ const App = {
   resetConfig() {
     this.operations = [];
     this.entryReset = true;
-    this.isInitialEntry = true;
   },
   getFinalResult(currentEntry) {
     const lastOperation = this.operations[this.operations.length - 1];
@@ -120,6 +113,8 @@ const App = {
           if (!currentOperation.textContent) return;
           this.result %= +currentEntry.textContent;
           break;
+        default:
+          this.result = +currentEntry.textContent;
       }
     }
     console.log(this.result);
@@ -139,17 +134,10 @@ const App = {
         this.entryReset = true;
       } else {
         // Number entered
-        debugger;
         if (this.entryReset) {
-          // update entryReset
+          // update entry
           currentEntry.textContent = lastEntry;
           this.entryReset = false;
-
-          if (this.isInitialEntry)  {
-            this.result = +lastEntry;
-            this.isInitialEntry = false;
-          }
-
         } else if (lastEntry !== '.' || !currentEntry.textContent.includes('.')) {
           currentEntry.textContent += lastEntry;
         }
