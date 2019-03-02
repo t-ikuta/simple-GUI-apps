@@ -139,3 +139,7 @@ nav.menu {
 b {
   font-weight: 800;
 }
+
+.fa-* {
+  color: indigo;
+}
